@@ -6,9 +6,12 @@ import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 @Configuration
+@Import(CglibAutoProxyRegistrar.class)
 public class ShiroConfig {
+
     @Bean
     public Realm localRealm() {
         SimpleAccountRealm realm = new SimpleAccountRealm();
@@ -21,7 +24,8 @@ public class ShiroConfig {
         DefaultShiroFilterChainDefinition chain = new DefaultShiroFilterChainDefinition();
         chain.addPathDefinition("/api/health", "anon");
         chain.addPathDefinition("/error", "anon");
-        chain.addPathDefinition("/**", "authc");
+        // authcBasic 同时支持 HTTP Basic（脚本/定时联调）与已建立的登录会话
+        chain.addPathDefinition("/**", "authcBasic");
         return chain;
     }
 }
