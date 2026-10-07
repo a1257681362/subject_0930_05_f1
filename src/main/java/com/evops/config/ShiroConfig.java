@@ -21,7 +21,7 @@ public class ShiroConfig {
         DefaultShiroFilterChainDefinition chain = new DefaultShiroFilterChainDefinition();
         chain.addPathDefinition("/api/health", "anon");
         chain.addPathDefinition("/error", "anon");
-        chain.addPathDefinition("/**", "authc");
+        chain.addPathDefinition("/**", "authcBasic");
         return chain;
     }
 }
